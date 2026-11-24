@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Volume Measurement on Plane</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div>
+    <h1 data-i18n="title"></h1>
+    <p class="sub" data-i18n="subtitle"></p>
+  </div>
+  <label class="langsel"><span data-i18n="lang"></span>
+    <select id="lang"><option value="en">English</option><option value="it">Italiano</option></select>
+  </label>
+</header>
+
+<main>
+  <aside id="panel">
+    <section>
+      <button id="btnOpen" class="primary wide" data-i18n="open"></button>
+      <input type="file" id="file" accept=".asc,.txt,.xyz" hidden>
+      <p class="hint" data-i18n="drop"></p>
+      <p id="info" class="info"></p>
+    </section>
+
+    <fieldset id="grpPlane" disabled>
+      <legend data-i18n="plane"></legend>
+      <div class="row"><label data-i18n="thr"></label><input type="number" id="thr" step="0.01" min="0.0001" value="0.1"></div>
+      <div class="row2"><button id="btnRefit" data-i18n="refit"></button><button id="btnFlip" data-i18n="flip"></button></div>
+    </fieldset>
+
+    <fieldset id="grpProbe" disabled>
+      <legend data-i18n="probe"></legend>
+      <div class="slider"><span>X</span><input type="range" id="rx" min="0" max="4000"><input type="number" id="nx" step="0.01"></div>
+      <div class="slider"><span>Y</span><input type="range" id="ry" min="0" max="4000"><input type="number" id="ny" step="0.01"></div>
+      <div class="slider"><span>Z</span><input type="range" id="rz" min="0" max="4000"><input type="number" id="nz" step="0.01"></div>
+      <div class="slider"><span>R</span><input type="range" id="rr" min="0" max="4000"><input type="number" id="nr" step="0.01"></div>
+      <label class="cb"><input type="checkbox" id="cbRest" checked> <span data-i18n="rest"></span></label>
+      <label class="cb"><input type="checkbox" id="cbCyl"> <span data-i18n="cyl"></span></label>
+      <label class="cb"><input type="checkbox" id="cbShow" checked> <span data-i18n="showSel"></span></label>
+      <p id="selCount" class="info"></p>
+      <p class="hint" data-i18n="help"></p>
+    </fieldset>
+
+    <fieldset id="grpMeasure" disabled>
+      <legend data-i18n="measure"></legend>
+      <div class="row"><label data-i18n="tol"></label><input type="number" id="tol" step="0.005" min="0.00001" value="0.05"></div>
+      <div class="row"><label data-i18n="voxSize"></label><input type="number" id="voxSize" step="0.01" min="0" value="0"></div>
+      <label class="cb"><input type="checkbox" id="cbKeep" checked> <span data-i18n="keep"></span></label>
+      <button id="btnMeasure" class="primary wide" data-i18n="go"></button>
+    </fieldset>
+
+    <fieldset>
+      <legend data-i18n="results"></legend>
+      <div class="tablewrap">
+        <table id="table"><thead><tr>
+          <th>#</th><th>X</th><th>Y</th><th data-i18n="thBest"></th><th data-i18n="thScan"></th>
+          <th data-i18n="thSph"></th><th data-i18n="thEll"></th><th data-i18n="thVox"></th><th data-i18n="thH"></th>
+        </tr></thead><tbody></tbody></table>
+      </div>
+      <div class="row3">
+        <button id="btnCsv" data-i18n="csv"></button>
+        <button id="btnDel" data-i18n="del"></button>
+        <button id="btnAligned" data-i18n="exportAligned"></button>
+      </div>
+    </fieldset>
+  </aside>
+
+  <div id="view">
+    <div id="legend" class="legend" hidden><div class="bar"></div><div class="lab"><span id="lgMin"></span><span>z [mm]</span><span id="lgMax"></span></div></div>
+    <div id="dropzone" class="dropzone" hidden></div>
+  </div>
+</main>
+
+<div id="busy" class="busy" hidden><div class="box"><p id="busyMsg"></p><div class="prog"><div id="busyBar"></div></div></div></div>
+
+<div id="result" class="modal" hidden>
+  <div class="mbox">
+    <div class="mhead"><h2 id="resTitle"></h2><button id="btnClose" data-i18n="close"></button></div>
+    <div class="mbody">
+      <div id="rview">
+        <div id="rlegend" class="legend"><div class="bar"></div><div class="lab"><span id="rlgMin">0</span><span>h [mm]</span><span id="rlgMax"></span></div></div>
+      </div>
+      <div class="rside">
+        <div id="resText" class="restext"></div>
+        <label class="cb"><input type="checkbox" id="cbMesh" checked> <span data-i18n="showMesh"></span></label>
+        <label class="cb"><input type="checkbox" id="cbRemoved"> <span data-i18n="showRemoved"></span></label>
+        <label class="cb"><input type="checkbox" id="cbFit"> <span data-i18n="showFit"></span></label>
+        <label class="cb"><input type="checkbox" id="cbVox"> <span data-i18n="showVox"></span></label>
+        <p id="voxShown" class="hint"></p>
+        <div class="row"><input type="number" id="voxSize2" step="0.01" min="0.001"><button id="btnVox" data-i18n="voxRecalc"></button></div>
+        <button id="btnExpPts" data-i18n="expPts"></button>
+        <button id="btnExpStl" data-i18n="expStl"></button>
+        <button id="btnCopy" data-i18n="copy"></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
